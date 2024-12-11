@@ -12,6 +12,9 @@ class UserForm extends StatefulWidget {
 
 class _UserFormState extends State<UserForm> {
 
+
+  String title = "Create Users";
+
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
@@ -22,24 +25,62 @@ class _UserFormState extends State<UserForm> {
       UserProvider userProvider = UserProvider.of(context)as
       UserProvider;
 
+      int? index;
+
+      if(userProvider.indexUser != null){
+        index = userProvider.indexUser;
+        controllerName.text = userProvider.userSelected!.name;
+        controllerEmail.text = userProvider.userSelected!.email;
+        controllerPassword.text = userProvider.userSelected!.password;
+
+        setState(() {
+          this.title = "Edit User";
+        });
+      }
+
       User user = User(
         name: controllerName.text,
         email: controllerEmail.text,
         password: controllerPassword.text
         );
 
+      if(index != null){
+        userProvider.users[index] = user;
+        } else{
+          int usersLeng = userProvider.users.length;
+      
+
+
         //salva um novo usuario
-        userProvider.users.insert(0,user);
+        userProvider.users.insert(usersLeng,user);
+        }
 
         //busca o usurio salvo
         print(userProvider.users[0].name);
 
         //navegar na lista de usuarios
+        Navigator.popAndPushNamed(context, "/list");
     }
+    
 
     return Scaffold(
       appBar: AppBar(
         title:Text('Create User'),
+        actions: [
+          Container(
+              child: TextButton(
+                child: Text(this.title),
+                onPressed: (){
+                  Navigator.popAndPushNamed(context, "/list");
+                },
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+                margin:EdgeInsets.all(8)
+          ),
+        ],
       ),
       body: Center(
         child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mancar/user_form.dart';
+import 'package:mancar/user_list.dart';
 import 'package:mancar/user_provider.dart';
 
 void main(){
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
         routes: {
           "/create":(_) => UserForm(),
           //lista de usuario
+          "/list":(_) => UserList(),
+
         },
         ),
       );

@@ -4,6 +4,8 @@ import 'package:mancar/user.dart';
 class UserProvider extends InheritedWidget{
   final Widget child; 
   List<User> users = [];
+  User? userSelected;
+  int? indexUser;
 
   UserProvider(
     {
